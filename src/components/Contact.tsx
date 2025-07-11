@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, MapPin, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const [firstName, setFirstName] = useState("");
@@ -32,35 +33,26 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      // Create mailto link with pre-filled information
-      const subject = `New Contact Form Submission from ${firstName} ${lastName}`;
-      const body = `Name: ${firstName} ${lastName}
-Email: ${email}
-Company: ${company || 'Not provided'}
-Message: ${message || 'No message provided'}
-
----
-This message was sent from the Dataflexus contact form.`;
-
-      const mailtoLink = `mailto:dataflexus@dataflexus.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      // Initialize EmailJS with your public key
+      emailjs.init("YOUR_PUBLIC_KEY"); // You'll need to replace this with your actual EmailJS public key
       
-      // Try to use a proper form submission service
-      const response = await fetch('https://formspree.io/f/xrbgvqko', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: `${firstName} ${lastName}`,
-          email: email,
-          company: company,
-          message: message,
-          _replyto: email,
-          _subject: subject,
-        }),
-      });
+      const templateParams = {
+        from_name: `${firstName} ${lastName}`,
+        from_email: email,
+        company: company || 'Not provided',
+        message: message || 'No message provided',
+        to_email: 'dataflexus@dataflexus.com',
+        subject: `New Contact Form Submission from ${firstName} ${lastName}`,
+      };
 
-      if (response.ok) {
+      // Send email using EmailJS
+      const response = await emailjs.send(
+        'YOUR_SERVICE_ID', // You'll need to replace this with your EmailJS service ID
+        'YOUR_TEMPLATE_ID', // You'll need to replace this with your EmailJS template ID
+        templateParams
+      );
+
+      if (response.status === 200) {
         toast({
           title: "Message Sent Successfully!",
           description: "Thank you for contacting us. We'll get back to you within 24 hours.",
@@ -73,48 +65,16 @@ This message was sent from the Dataflexus contact form.`;
         setCompany("");
         setMessage("");
       } else {
-        // Fallback to mailto if the service fails
-        window.location.href = mailtoLink;
-        
-        toast({
-          title: "Email Client Opened",
-          description: "Your default email client should open with the message pre-filled. Please send it from there.",
-        });
-        
-        // Reset form
-        setFirstName("");
-        setLastName("");
-        setEmail("");
-        setCompany("");
-        setMessage("");
+        throw new Error('Failed to send email');
       }
     } catch (error) {
-      console.error('Form submission error:', error);
-      
-      // Fallback to mailto
-      const subject = `New Contact Form Submission from ${firstName} ${lastName}`;
-      const body = `Name: ${firstName} ${lastName}
-Email: ${email}
-Company: ${company || 'Not provided'}
-Message: ${message || 'No message provided'}
-
----
-This message was sent from the Dataflexus contact form.`;
-
-      const mailtoLink = `mailto:dataflexus@dataflexus.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      window.location.href = mailtoLink;
+      console.error('Email sending error:', error);
       
       toast({
-        title: "Email Client Opened",
-        description: "Your default email client should open with the message pre-filled. Please send it from there.",
+        title: "Error Sending Message",
+        description: "There was a problem sending your message. Please try again or contact us directly at dataflexus@dataflexus.com",
+        variant: "destructive",
       });
-      
-      // Reset form
-      setFirstName("");
-      setLastName("");
-      setEmail("");
-      setCompany("");
-      setMessage("");
     } finally {
       setIsSubmitting(false);
     }
