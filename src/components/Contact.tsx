@@ -32,8 +32,20 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      // Using Formspree service for automatic email sending
-      const response = await fetch('https://formspree.io/f/dataflexus@dataflexus.com', {
+      // Create mailto link with pre-filled information
+      const subject = `New Contact Form Submission from ${firstName} ${lastName}`;
+      const body = `Name: ${firstName} ${lastName}
+Email: ${email}
+Company: ${company || 'Not provided'}
+Message: ${message || 'No message provided'}
+
+---
+This message was sent from the Dataflexus contact form.`;
+
+      const mailtoLink = `mailto:dataflexus@dataflexus.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      
+      // Try to use a proper form submission service
+      const response = await fetch('https://formspree.io/f/xrbgvqko', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -44,7 +56,7 @@ const Contact = () => {
           company: company,
           message: message,
           _replyto: email,
-          _subject: `New Contact Form Submission from ${firstName} ${lastName}`,
+          _subject: subject,
         }),
       });
 
@@ -61,14 +73,48 @@ const Contact = () => {
         setCompany("");
         setMessage("");
       } else {
-        throw new Error('Failed to send message');
+        // Fallback to mailto if the service fails
+        window.location.href = mailtoLink;
+        
+        toast({
+          title: "Email Client Opened",
+          description: "Your default email client should open with the message pre-filled. Please send it from there.",
+        });
+        
+        // Reset form
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setCompany("");
+        setMessage("");
       }
     } catch (error) {
+      console.error('Form submission error:', error);
+      
+      // Fallback to mailto
+      const subject = `New Contact Form Submission from ${firstName} ${lastName}`;
+      const body = `Name: ${firstName} ${lastName}
+Email: ${email}
+Company: ${company || 'Not provided'}
+Message: ${message || 'No message provided'}
+
+---
+This message was sent from the Dataflexus contact form.`;
+
+      const mailtoLink = `mailto:dataflexus@dataflexus.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailtoLink;
+      
       toast({
-        title: "Error Sending Message",
-        description: "There was a problem sending your message. Please try again or contact us directly at dataflexus@dataflexus.com",
-        variant: "destructive",
+        title: "Email Client Opened",
+        description: "Your default email client should open with the message pre-filled. Please send it from there.",
       });
+      
+      // Reset form
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setCompany("");
+      setMessage("");
     } finally {
       setIsSubmitting(false);
     }
