@@ -13,9 +13,10 @@ const Contact = () => {
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
   const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Validate required fields
@@ -28,21 +29,49 @@ const Contact = () => {
       return;
     }
 
-    // Create mailto link
-    const subject = `Contact from ${firstName} ${lastName}`;
-    const body = `Name: ${firstName} ${lastName}
-Email: ${email}
-Company: ${company}
-Message: ${message}`;
-    
-    const mailtoLink = `mailto:dataflexus@dataflexus.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    
-    window.location.href = mailtoLink;
-    
-    toast({
-      title: "Opening Email Client",
-      description: "Your email client should open with the message ready to send.",
-    });
+    setIsSubmitting(true);
+
+    try {
+      // Using Formspree service for automatic email sending
+      const response = await fetch('https://formspree.io/f/dataflexus@dataflexus.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: `${firstName} ${lastName}`,
+          email: email,
+          company: company,
+          message: message,
+          _replyto: email,
+          _subject: `New Contact Form Submission from ${firstName} ${lastName}`,
+        }),
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Message Sent Successfully!",
+          description: "Thank you for contacting us. We'll get back to you within 24 hours.",
+        });
+        
+        // Reset form
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setCompany("");
+        setMessage("");
+      } else {
+        throw new Error('Failed to send message');
+      }
+    } catch (error) {
+      toast({
+        title: "Error Sending Message",
+        description: "There was a problem sending your message. Please try again or contact us directly at dataflexus@dataflexus.com",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -132,9 +161,13 @@ Message: ${message}`;
                   />
                 </div>
                 
-                <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+                <Button 
+                  type="submit" 
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                  disabled={isSubmitting}
+                >
                   <Send className="w-4 h-4 mr-2" />
-                  Send Message
+                  {isSubmitting ? "Sending..." : "Send Message"}
                 </Button>
               </form>
             </CardContent>
