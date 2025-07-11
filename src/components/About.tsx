@@ -38,11 +38,13 @@ const About = () => {
             Being able to identify issues, optimize budgets, and detect winning strategies on time is what makes a data-driven 
             marketing plan successful.
           </p>
-          <div className="bg-blue-50 border-l-4 border-blue-500 p-6 text-left">
-            <p className="text-lg text-slate-700">
-              <strong className="text-blue-600">Our Core Advantage:</strong> Flexibility. We adapt to your goals, tech stack, 
-              and workflows — all while maintaining highly competitive costs. We understand that no two clients are the same, 
-              and our solutions are built with that in mind.
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 border-l-4 border-blue-500 p-8 text-left rounded-lg shadow-lg">
+            <p className="text-lg text-slate-800 leading-relaxed">
+              <strong className="text-2xl text-blue-700 block mb-2">Our Core Advantage: Flexibility.</strong>
+              <span className="text-xl font-medium text-slate-700">
+                We adapt to your goals, tech stack, and workflows — all while maintaining highly competitive costs. 
+                We understand that no two clients are the same, and our solutions are built with that in mind.
+              </span>
             </p>
           </div>
         </div>

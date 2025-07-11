@@ -3,8 +3,19 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, BarChart3, Zap, Target } from "lucide-react";
 
 const Hero = () => {
+  const scrollToContact = () => {
+    const element = document.querySelector("#contact");
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const openLookerStudio = () => {
+    window.open("https://lookerstudio.google.com/reporting/04b019ab-859f-4c1b-bc34-9baaf263450c", "_blank");
+  };
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-white overflow-hidden">
+    <section id="home" className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-white overflow-hidden">
       {/* Background pattern */}
       <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px_50px]" />
       
@@ -29,7 +40,7 @@ const Hero = () => {
           
           {/* Subheading */}
           <p className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed">
-            We don't just extract and visualize data—we grow with you. From real-time integrations to custom insights, 
+            We don't just extract and visualize data—we grow with you. From real-time integrations to decision-ready data, 
             <span className="text-blue-400 font-semibold"> flexibility is our core advantage.</span>
           </p>
           
@@ -51,11 +62,20 @@ const Hero = () => {
           
           {/* CTA buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg">
+            <Button 
+              onClick={scrollToContact}
+              size="lg" 
+              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg"
+            >
               Get Started Today
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
-            <Button variant="outline" size="lg" className="border-white/20 text-white hover:bg-white/10 px-8 py-3 text-lg">
+            <Button 
+              onClick={openLookerStudio}
+              variant="outline" 
+              size="lg" 
+              className="border-white/20 text-white hover:bg-white/10 bg-white/5 px-8 py-3 text-lg"
+            >
               View Our Work
             </Button>
           </div>

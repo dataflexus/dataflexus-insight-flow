@@ -15,7 +15,8 @@ const Products = () => {
         "Web analytics tools connection",
         "API refreshes multiple times daily",
         "Custom metrics and dimensions",
-        "Flexible refresh frequency"
+        "Flexible refresh frequency",
+        "+ many more platforms available"
       ],
       color: "bg-blue-500"
     },
@@ -41,7 +42,6 @@ const Products = () => {
       description: "Custom Looker Studio dashboards",
       details: [
         "Fully customized dashboard design",
-        "Actionable insights surfacing",
         "Team-specific visualizations",
         "Intuitive data exploration",
         "No cookie-cutter templates",

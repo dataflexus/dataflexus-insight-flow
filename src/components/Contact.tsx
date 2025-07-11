@@ -1,11 +1,50 @@
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, MapPin, Send } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const Contact = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [company, setCompany] = useState("");
+  const [message, setMessage] = useState("");
+  const { toast } = useToast();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Validate required fields
+    if (!firstName || !lastName || !email) {
+      toast({
+        title: "Required Fields Missing",
+        description: "Please fill in your first name, last name, and email address.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Create mailto link
+    const subject = `Contact from ${firstName} ${lastName}`;
+    const body = `Name: ${firstName} ${lastName}
+Email: ${email}
+Company: ${company}
+Message: ${message}`;
+    
+    const mailtoLink = `mailto:dataflexus@dataflexus.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    window.location.href = mailtoLink;
+    
+    toast({
+      title: "Opening Email Client",
+      description: "Your email client should open with the message ready to send.",
+    });
+  };
+
   return (
     <section id="contact" className="py-20 bg-slate-900 text-white">
       <div className="container mx-auto px-6">
@@ -26,63 +65,78 @@ const Contact = () => {
               <CardTitle className="text-2xl text-white">Get In Touch</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-4">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300 mb-2">
+                      First Name *
+                    </label>
+                    <Input 
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      placeholder="John" 
+                      className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300 mb-2">
+                      Last Name *
+                    </label>
+                    <Input 
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      placeholder="Doe" 
+                      className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
+                      required
+                    />
+                  </div>
+                </div>
+                
                 <div>
                   <label className="block text-sm font-medium text-slate-300 mb-2">
-                    First Name
+                    Email *
                   </label>
                   <Input 
-                    placeholder="John" 
+                    type="email" 
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="john@company.com" 
+                    className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-2">
+                    Company
+                  </label>
+                  <Input 
+                    value={company}
+                    onChange={(e) => setCompany(e.target.value)}
+                    placeholder="Your Company" 
                     className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
                   />
                 </div>
+                
                 <div>
                   <label className="block text-sm font-medium text-slate-300 mb-2">
-                    Last Name
+                    Message
                   </label>
-                  <Input 
-                    placeholder="Doe" 
+                  <Textarea 
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="Tell us about your data challenges and goals..."
+                    rows={4}
                     className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
                   />
                 </div>
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
-                  Email
-                </label>
-                <Input 
-                  type="email" 
-                  placeholder="john@company.com" 
-                  className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
-                  Company
-                </label>
-                <Input 
-                  placeholder="Your Company" 
-                  className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
-                  Message
-                </label>
-                <Textarea 
-                  placeholder="Tell us about your data challenges and goals..."
-                  rows={4}
-                  className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
-                />
-              </div>
-              
-              <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-                <Send className="w-4 h-4 mr-2" />
-                Send Message
-              </Button>
+                
+                <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+                  <Send className="w-4 h-4 mr-2" />
+                  Send Message
+                </Button>
+              </form>
             </CardContent>
           </Card>
 
@@ -103,17 +157,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-white mb-1">Email Us</h4>
-                  <p className="text-slate-300">hello@dataflexus.com</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="bg-green-600 p-3 rounded-lg">
-                  <Phone className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-white mb-1">Call Us</h4>
-                  <p className="text-slate-300">+1 (555) 123-4567</p>
+                  <p className="text-slate-300">dataflexus@dataflexus.com</p>
                 </div>
               </div>
 
