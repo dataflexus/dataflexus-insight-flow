@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Database, GitMerge, BarChart3, Zap } from "lucide-react";
 
@@ -10,13 +9,11 @@ const Products = () => {
       title: "Data Import",
       description: "Connect all your platforms in real-time",
       details: [
-        "Meta Ads, Google Ads, TikTok Ads integration",
-        "Mobile Measurement Partners (MMPs)",
-        "Web analytics tools connection",
-        "API refreshes multiple times daily",
-        "Custom metrics and dimensions",
-        "Flexible refresh frequency",
-        "+ many more platforms available"
+        "Integrate with major ad platforms (Meta Ads, Google Ads, TikTok Ads) and many more",
+        "Seamless connection with web analytics and Mobile Measurement Partners (MMPs)",
+        "API refreshes multiple times per day, fully customizable frequency",
+        "Support for custom metrics and dimensions",
+        "Fast onboarding of new platforms upon request"
       ],
       color: "bg-blue-500"
     },
