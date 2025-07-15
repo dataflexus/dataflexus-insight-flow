@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Target, Users, Zap, TrendingUp } from "lucide-react";
 
@@ -11,7 +10,7 @@ const About = () => {
     },
     {
       icon: Zap,
-      title: "Flexibility First",
+      title: "Flexibility First", 
       description: "We adapt to your goals, tech stack, and workflows while maintaining competitive costs."
     },
     {
@@ -76,7 +75,7 @@ const About = () => {
           </p>
           <div className="grid md:grid-cols-3 gap-8 text-center">
             <div>
-              <div className="text-3xl font-bold text-blue-400 mb-2">50+</div>
+              <div className="text-3xl font-bold text-blue-400 mb-2">10+</div>
               <div className="text-blue-100">Successful Projects</div>
             </div>
             <div>
