@@ -11,7 +11,7 @@ const Hero = () => {
   };
 
   const openLookerStudio = () => {
-    window.open("https://lookerstudio.google.com/reporting/04b019ab-859f-4c1b-bc34-9baaf263450c", "_blank");
+    window.open("https://lookerstudio.google.com/u/0/reporting/04b019ab-859f-4c1b-bc34-9baaf263450c/page/p_yg32sozftd", "_blank");
   };
 
   return (
