@@ -1,17 +1,16 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowRight, BarChart3, Zap, Target } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
+  
   const scrollToContact = () => {
     const element = document.querySelector("#contact");
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
-  };
-
-  const openLookerStudio = () => {
-    window.open("https://lookerstudio.google.com/u/0/reporting/04b019ab-859f-4c1b-bc34-9baaf263450c/page/p_yg32sozftd", "_blank");
   };
 
   return (
@@ -71,7 +70,7 @@ const Hero = () => {
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
             <Button 
-              onClick={openLookerStudio}
+              onClick={() => navigate("/our-work")}
               variant="outline" 
               size="lg" 
               className="border-white/20 text-white hover:bg-white/10 bg-white/5 px-8 py-3 text-lg"
