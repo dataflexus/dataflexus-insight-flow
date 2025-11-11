@@ -1,8 +1,10 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
+import { useEffect } from "react";
 
 const PrivacyPolicy = () => {
+  useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); }, []);
   return (
     <div className="min-h-screen">
       <Navigation />
