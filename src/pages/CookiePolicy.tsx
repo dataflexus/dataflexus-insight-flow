@@ -117,8 +117,7 @@ const CookiePolicy = () => {
               If you have questions about our use of cookies, please contact us:
             </p>
             <p className="mt-2">
-              Email: privacy@dataflexus.com<br />
-              Address: 123 Business Street, Suite 100, City, State 12345
+              Email: dataflexus@dataflexus.com
             </p>
           </section>
         </div>

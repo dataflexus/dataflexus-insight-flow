@@ -140,8 +140,7 @@ const TermsOfService = () => {
               If you have any questions about these Terms, please contact us at:
             </p>
             <p className="mt-2">
-              Email: info@dataflexus.com<br />
-              Address: 123 Business Street, Suite 100, City, State 12345
+              Email: dataflexus@dataflexus.com
             </p>
           </section>
         </div>

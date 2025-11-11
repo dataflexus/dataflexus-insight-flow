@@ -40,7 +40,7 @@ const PrivacyPolicy = () => {
                 <li>Participate in surveys or promotions</li>
               </ul>
               <p className="text-muted-foreground mb-4">
-                This information may include: name, email address, phone number, company name, job title, 
+                This information may include: name, email address, company name, job title, 
                 and any other information you choose to provide.
               </p>
 
@@ -266,8 +266,7 @@ const PrivacyPolicy = () => {
               </p>
               <div className="text-muted-foreground space-y-2">
                 <p><strong>Dataflexus</strong></p>
-                <p>Email: privacy@dataflexus.com</p>
-                <p>Phone: +1 (555) 123-4567</p>
+                <p>Email: dataflexus@dataflexus.com</p>
               </div>
             </CardContent>
           </Card>

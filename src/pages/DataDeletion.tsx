@@ -44,9 +44,9 @@ const DataDeletion = () => {
                   Send an email to our data protection team with the subject line "Data Deletion Request":
                 </p>
                 <Button asChild variant="outline" className="gap-2">
-                  <a href="mailto:privacy@dataflexus.com?subject=Data%20Deletion%20Request">
+                  <a href="mailto:dataflexus@dataflexus.com?subject=Data%20Deletion%20Request">
                     <Mail className="h-4 w-4" />
-                    privacy@dataflexus.com
+                    dataflexus@dataflexus.com
                   </a>
                 </Button>
               </div>
@@ -127,9 +127,7 @@ const DataDeletion = () => {
               status of your request, please contact our privacy team:
             </p>
             <p className="mt-2">
-              Email: privacy@dataflexus.com<br />
-              Phone: +1 (555) 123-4567<br />
-              Address: 123 Business Street, Suite 100, City, State 12345
+              Email: dataflexus@dataflexus.com
             </p>
           </section>
 
